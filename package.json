@@ -1,0 +1,15 @@
+{
+  "name": "usb-relay-nodejs",
+  "version": "2.0.0",
+  "description": "Node.js HID driver for dcttech USB relay board (0x16c0:0x05df)",
+  "main": "usbrelay.js",
+  "type": "commonjs",
+  "scripts": {
+    "example": "node example.js",
+    "scan": "node -e \"const {findDevices}=require('./usbrelay'); console.dir(findDevices(), {depth:null});\"",
+    "scan:hid": "node -e \"const {debugDevices}=require('./usbrelay'); console.dir(debugDevices(), {depth:null});\""
+  },
+  "dependencies": {
+    "node-hid": "^3.1.0"
+  }
+}
