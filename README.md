@@ -2,6 +2,20 @@
 
 Node.js implementations for a dcttech USB relay board (VID `0x16c0`, PID `0x05df`).
 
+## Hardware scope
+
+This project was developed and tested specifically with **USBRelay8** hardware.
+
+- Vendor page: https://www.seeit.fr/
+- Purchased from RS: https://benl.rs-online.com/web/p/communication-wireless-development-tools/2864068
+
+Datasheet location in this repository:
+
+- `Datasheet/A700000011182296.pdf`
+
+Other relay variants may work, but USBRelay8 is the validated target for this codebase.
+
+
 ## Available versions
 
 - `v1_HID (only mac)`: legacy HID-only approach
