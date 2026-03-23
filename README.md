@@ -18,14 +18,14 @@ Other relay variants may work, but USBRelay8 is the validated target for this co
 
 ## Available versions
 
-- `v1_HID (only mac)`: legacy HID-only approach
-- `v2_USB (cross platform)`: older cross-platform USB version
-- `v3_USB (cross platform)`: current version, ES modules + cleaned OOP structure
+- `v1_HID_only_mac`: legacy HID-only approach
+- `v2_USB_cross_platform`: older cross-platform USB version
+- `v3_USB_cross_platform`: current version, ES modules + cleaned OOP structure
 
 ## Recommended: use v3
 
 ```bash
-cd "v3_USB (cross platform)"
+cd "v3_USB_cross_platform"
 npm install
 ```
 
@@ -44,7 +44,7 @@ npm run scan
 ## v3 structure
 
 ```text
-v3_USB (cross platform)/
+v3_USB_cross_platform/
   package.json
   src/
     app.js                 # CLI app

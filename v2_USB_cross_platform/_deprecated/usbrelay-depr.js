@@ -26,7 +26,7 @@
  *       relay_num: 1-based (0x01..0x08)
  */
 
-const HID = require("node-hid");
+const HID = require("../../v1_HID_only_mac/node_modules/node-hid/nodehid");
 
 const VENDOR_ID  = 0x16c0;
 const PRODUCT_ID = 0x05df;
@@ -300,7 +300,7 @@ class UsbRelay {
 
 /**
  * Returns a list of connected USB relay boards (VID 0x16c0, PID 0x05df).
- * @returns {import('node-hid').Device[]}
+ * @returns {import('../../v1_HID_only_mac/node_modules/node-hid/nodehid').Device[]}
  */
 function findDevices() {
   return HID.devices(VENDOR_ID, PRODUCT_ID);
