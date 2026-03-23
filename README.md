@@ -1,14 +1,14 @@
 # USB Relay - Node.js drivers (macOS / Linux / Windows)
 
-Node.js implementaties voor een USB relayboard van dcttech (VID `0x16c0`, PID `0x05df`).
+Node.js implementations for a dcttech USB relay board (VID `0x16c0`, PID `0x05df`).
 
-## Beschikbare versies
+## Available versions
 
-- `v1_HID (only mac)`: oude HID-only aanpak
-- `v2_USB (cross platform)`: oudere cross-platform USB-versie
-- `v3_USB (cross platform)`: actuele versie, ES modules + opgeschoonde OOP-structuur
+- `v1_HID (only mac)`: legacy HID-only approach
+- `v2_USB (cross platform)`: older cross-platform USB version
+- `v3_USB (cross platform)`: current version, ES modules + cleaned OOP structure
 
-## Aanbevolen: v3 gebruiken
+## Recommended: use v3
 
 ```bash
 cd "v3_USB (cross platform)"
@@ -23,11 +23,11 @@ npm test
 npm run scan
 ```
 
-- `npm start`: start interactieve CLI app
-- `npm test`: draait het diagnose/test script met control transfers
-- `npm run scan`: toont gedetecteerde relay devices
+- `npm start`: runs the interactive CLI app
+- `npm test`: runs the hardware diagnostics script with control transfers
+- `npm run scan`: lists detected relay devices
 
-## v3 structuur
+## v3 structure
 
 ```text
 v3_USB (cross platform)/
@@ -36,21 +36,21 @@ v3_USB (cross platform)/
     app.js                 # CLI app
     usbrelay/
       UsbRelay.js          # OOP class + device logic
-      index.js             # publieke module-entry voor usbrelay
+      index.js             # public module entry for usbrelay
   scripts/
-    test-relay.js          # hardware diagnose/test script
+    test-relay.js          # hardware diagnostics/test script
 ```
 
-## Structuur
+## Module entry points
 
-`index.js` is de publieke ingang van de relay-module. 
+`index.js` is the public entry point for the relay module.
 
 In `package.json`:
 
-- `main` wijst naar `src/app.js` (de uitvoerbare app)
-- `exports` wijst naar `./src/usbrelay/index.js` (de herbruikbare module-API)
+- `main` points to `src/app.js` (the executable app)
+- `exports` points to `./src/usbrelay/index.js` (the reusable module API)
 
-## Gebruik in eigen code (v3)
+## Use in your own code (v3)
 
 ```js
 import { UsbRelay } from './src/usbrelay/index.js';
@@ -73,14 +73,14 @@ main().catch((err) => {
 });
 ```
 
-## Opmerkingen per platform
+## Platform notes
 
-- macOS/Linux: werkt via `usb` controlTransfer (libusb backend)
-- Windows: gebruik libusbK via Zadig voor dit type board
+- macOS/Linux: uses `usb` controlTransfer (libusb backend)
+- Windows: use libusbK via Zadig for this board type
 
-## Troubleshooting (kort)
+## Troubleshooting
 
-1. Controleer dat het board zichtbaar is op USB niveau.
-2. Controleer VID/PID: `16c0:05df`.
-3. Gebruik `npm run scan` om te zien of Node het board vindt.
-4. Op Windows: controleer de gekoppelde driver met Zadig.
+1. Verify that the board is visible on the USB bus.
+2. Verify VID/PID: `16c0:05df`.
+3. Run `npm run scan` to check whether Node can find the board.
+4. On Windows, verify the assigned driver with Zadig.
