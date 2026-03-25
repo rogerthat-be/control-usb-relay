@@ -1,8 +1,9 @@
 # USB Relay - Node.js drivers (macOS / Windows)
 
-Node.js implementations for a dcttech USB relay board 
+Node.js implementations for the Seeit USBB-RELAY08 Relay Control Card Module (a dcttech USB relay board)
 
-## Hardware scope
+![USB Relay Board](./_assets/board.webp)
+
 
 This project was developed and tested specifically with **USBRelay8** hardware.
 
