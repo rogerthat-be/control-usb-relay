@@ -30,7 +30,7 @@ This project is **developed and tested specifically with USBRelay8 hardware**.
 
 📄 Datasheet available in this repository:
 
-<Datasheet/A700000011182296.pdf>>
+<Datasheet/A700000011182296.pdf>
 
 > ⚠️ Other relay boards may work, but only USBRelay8 has been validated.
 
