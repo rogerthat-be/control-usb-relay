@@ -1,6 +1,6 @@
-# USB Relay - Node.js drivers (macOS / Linux / Windows)
+# USB Relay - Node.js drivers (macOS / Windows)
 
-Node.js implementations for a dcttech USB relay board (VID `0x16c0`, PID `0x05df`).
+Node.js implementations for a dcttech USB relay board 
 
 ## Hardware scope
 
@@ -15,21 +15,53 @@ Datasheet location in this repository:
 
 Other relay variants may work, but USBRelay8 is the validated target for this codebase.
 
+## Repo structure
 
-## Available versions
+```text
+  _deprecated/              # old/legacy files
+  src/
+    app.js                 # CLI app
+    usbrelay/
+      UsbRelay.js          # OOP class + device logic
+      index.js             # public module entry for usbrelay
+  scripts/
+    test-relay.js          # hardware diagnostics/test script
+  package.json
+```
 
-- `v1_HID_only_mac`: legacy HID-only approach
-- `v2_USB_cross_platform`: older cross-platform USB version
-- `v3_USB_cross_platform`: current version, ES modules + cleaned OOP structure
-
-## Recommended: use v3
+## Install
 
 ```bash
-cd "v3_USB_cross_platform"
 npm install
 ```
 
-## v3 scripts
+### MacOS setup
+
+No need to install any drivers.
+macOS: uses `node-hid` backend by default
+
+### Windows setup
+
+For Windows, run the Zadig driver steps before using this project.
+
+Zadig download: <https://zadig.akeo.ie/>
+
+Tested setup:
+- `libusb-win32` in Zadig
+
+Also likely to work (not tested)
+- `libusbK` in Zadig
+
+**Installation steps:**
+1. Connect the USB relay board.
+2. Open Zadig as Administrator.
+3. Enable `Options -> List All Devices`.
+4. Select the relay device (**USBRelay8** / VID `16c0` PID `05df`).
+5. Choose `libusb-win32` as target driver
+6. Click `Replace Driver` (or `Install Driver`).
+7. Reconnect the board and run `npm run scan`.
+
+## Scripts
 
 ```bash
 npm start
@@ -41,30 +73,8 @@ npm run scan
 - `npm test`: runs the hardware diagnostics script with control transfers
 - `npm run scan`: lists detected relay devices
 
-## v3 structure
 
-```text
-v3_USB_cross_platform/
-  package.json
-  src/
-    app.js                 # CLI app
-    usbrelay/
-      UsbRelay.js          # OOP class + device logic
-      index.js             # public module entry for usbrelay
-  scripts/
-    test-relay.js          # hardware diagnostics/test script
-```
-
-## Module entry points
-
-`index.js` is the public entry point for the relay module.
-
-In `package.json`:
-
-- `main` points to `src/app.js` (the executable app)
-- `exports` points to `./src/usbrelay/index.js` (the reusable module API)
-
-## Use in your own code (v3)
+## How to use
 
 ```js
 import { UsbRelay } from './src/usbrelay/index.js';
@@ -87,15 +97,9 @@ main().catch((err) => {
 });
 ```
 
-## Platform notes
-
-- macOS: uses `node-hid` backend by default (prevents libusb access errors)
-- Linux/Windows: uses `usb` (libusb) first, with automatic HID fallback on access-denied errors
-- Windows: libusb path still needs libusbK via Zadig for this board type
-
 ## Troubleshooting
 
 1. Verify that the board is visible on the USB bus.
 2. Verify VID/PID: `16c0:05df`.
 3. Run `npm run scan` to check whether Node can find the board.
-4. On Windows, verify the assigned driver with Zadig.
+4. On Windows, verify Zadig driver assignment (`libusb-win32` tested, `libusbK` likely).
