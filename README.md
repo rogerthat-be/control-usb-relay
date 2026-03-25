@@ -1,87 +1,125 @@
-# USB Relay - Node.js wrapper for Seeit USBB-RELAY08
+# Wrapper for USBRelay8 with Node.js
 
-Node.js implementations for the Seeit USBB-RELAY08 Relay Control Card Module (a dcttech USB relay board)
+A lightweight and easy-to-use **Node.js wrapper** for controlling the **USBRelay8 (USBB-RELAY08)** relay board via USB.
+
+This project provides both a programmatic API and a CLI tool, making it ideal for automation, IoT setups, and hardware control from Node.js.
 
 ![USB Relay Board](./_assets/board.webp)
 
+---
 
-This project was developed and tested specifically with **USBRelay8** hardware.
+## Features
 
-- Vendor page: https://www.seeit.fr/
-- Purchased from RS: https://benl.rs-online.com/web/p/communication-wireless-development-tools/2864068
+- Control individual relays (on/off)
+- Switch all relays at once
+- Read relay state
+- Interactive CLI tool
+- Device scanning utility
+- Promise-based API
+- Clean OOP architecture
 
-Datasheet location in this repository:
+---
 
-- `Datasheet/A700000011182296.pdf`
+## Hardware Support
 
-Other relay variants may work, but USBRelay8 is the validated target for this codebase.
+This project is **developed and tested specifically with USBRelay8 hardware**.
 
-## Repo structure
+- Vendor: https://www.seeit.fr/
+- Purchase link: https://benl.rs-online.com/web/p/communication-wireless-development-tools/2864068
+- VID/PID: `16c0:05df`
 
-```text
-  _deprecated/              # old/legacy files
-  src/
-    app.js                 # CLI app
-    usbrelay/
-      UsbRelay.js          # OOP class + device logic
-      index.js             # public module entry for usbrelay
-  scripts/
-    test-relay.js          # hardware diagnostics/test script
-  package.json
+📄 Datasheet available in this repository:
+
+Datasheet/A700000011182296.pdf
+
+> ⚠️ Other relay boards may work, but only USBRelay8 has been validated.
+
+---
+
+## Repository Structure
+
+```
+_deprecated/              # Legacy / unused code
+src/
+  app.js                 # CLI application
+  usbrelay/
+    UsbRelay.js          # Core relay class
+    index.js             # Public module entry
+scripts/
+  test-relay.js          # Hardware diagnostics
+package.json
 ```
 
-## Install
+---
+
+## Installation
 
 ```bash
 npm install
 ```
 
-### MacOS setup
+---
 
-No need to install any drivers.
-macOS: uses `node-hid` backend by default
+## Platform Setup
 
-### Windows setup
+### macOS
 
-For Windows, run the Zadig driver steps before using this project.
+No additional setup required.
 
-Zadig download: <https://zadig.akeo.ie/>
+- Uses `node-hid` backend automatically
+- Works out of the box
 
-Tested setup:
-- `libusb-win32` in Zadig
+---
 
-Also likely to work (not tested)
-- `libusbK` in Zadig
+### Windows
 
-**Installation steps:**
-1. Connect the USB relay board.
-2. Open Zadig as Administrator.
-3. Enable `Options -> List All Devices`.
-4. Select the relay device (**USBRelay8** / VID `16c0` PID `05df`).
-5. Choose `libusb-win32` as target driver
-6. Click `Replace Driver` (or `Install Driver`).
-7. Reconnect the board and run `npm run scan`.
+Requires driver installation using **Zadig**.
 
-## Scripts
+Download: https://zadig.akeo.ie/
+
+#### Tested configuration:
+- ✅ `libusb-win32`
+
+#### Likely compatible (not tested):
+- ⚠️ `libusbK`
+
+#### Installation Steps:
+
+1. Connect the USB relay board
+2. Open Zadig as Administrator
+3. Enable: `Options → List All Devices`
+4. Select device: **USBRelay8** (VID `16c0`, PID `05df`)
+5. Choose driver: `libusb-win32`
+6. Click **Install Driver** or **Replace Driver**
+7. Reconnect the device
+8. Run:
 
 ```bash
-npm start
-npm test
 npm run scan
 ```
 
-- `npm start`: runs the interactive CLI app
-- `npm test`: runs the hardware diagnostics script with control transfers
-- `npm run scan`: lists detected relay devices
+---
 
+## Available Commands
 
-## How to use
+| Command          | Description                          |
+|------------------|--------------------------------------|
+| `npm start`      | Run interactive CLI                  |
+| `npm test`       | Run hardware diagnostics             |
+| `npm run scan`   | List connected relay devices         |
+
+---
+
+## Usage
+
+### Basic Example
 
 ```js
 import { UsbRelay } from './src/usbrelay/index.js';
 
 async function main() {
   const relay = new UsbRelay(8);
+
   await relay.open();
 
   await relay.relayOn(1);
@@ -89,6 +127,7 @@ async function main() {
   await relay.allOff();
 
   console.log(relay.getState());
+
   await relay.close();
 }
 
@@ -98,9 +137,28 @@ main().catch((err) => {
 });
 ```
 
+---
+
 ## Troubleshooting
 
-1. Verify that the board is visible on the USB bus.
-2. Verify VID/PID: `16c0:05df`.
-3. Run `npm run scan` to check whether Node can find the board.
-4. On Windows, verify Zadig driver assignment (`libusb-win32` tested, `libusbK` likely).
+If the device is not detected:
+
+1. Verify the device is connected
+2. Confirm VID/PID: `16c0:05df`
+3. Run:
+
+```bash
+npm run scan
+```
+
+4. On Windows:
+   - Ensure Zadig driver is installed correctly
+   - Recommended: `libusb-win32`
+
+---
+
+## Notes
+
+- Built on top of `node-hid`
+- Designed for reliability and simplicity
+- Suitable for automation, prototyping, and hardware integrations
