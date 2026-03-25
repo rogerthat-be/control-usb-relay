@@ -204,7 +204,7 @@ export default function App() {
               <h2>Bulk actions</h2>
             </div>
             <div className="button-row">
-              <button type="button" className="solid-button" onClick={() => handleSetAll(true)} disabled={busy || !connected}>
+              <button type="button" className="ghost-button" onClick={() => handleSetAll(true)} disabled={busy || !connected}>
                 All on
               </button>
               <button type="button" className="ghost-button" onClick={() => handleSetAll(false)} disabled={busy || !connected}>
