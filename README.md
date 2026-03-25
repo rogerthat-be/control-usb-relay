@@ -89,8 +89,9 @@ main().catch((err) => {
 
 ## Platform notes
 
-- macOS/Linux: uses `usb` controlTransfer (libusb backend)
-- Windows: use libusbK via Zadig for this board type
+- macOS: uses `node-hid` backend by default (prevents libusb access errors)
+- Linux/Windows: uses `usb` (libusb) first, with automatic HID fallback on access-denied errors
+- Windows: libusb path still needs libusbK via Zadig for this board type
 
 ## Troubleshooting
 
