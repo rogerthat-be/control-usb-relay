@@ -31,6 +31,7 @@ export default function App() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [pendingRelay, setPendingRelay] = useState(null);
+  const [autoRefresh, setAutoRefresh] = useState(false);
 
   async function refresh() {
     try {
@@ -47,9 +48,19 @@ export default function App() {
 
   useEffect(() => {
     refresh();
-    const timer = window.setInterval(refresh, POLL_INTERVAL_MS);
-    return () => window.clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    if (!autoRefresh || !snapshot?.connected) {
+      return undefined;
+    }
+
+    const timer = window.setInterval(() => {
+      refresh();
+    }, POLL_INTERVAL_MS);
+
+    return () => window.clearInterval(timer);
+  }, [autoRefresh, snapshot?.connected]);
 
   async function handleConnect(forceReconnect = false) {
     try {
@@ -116,10 +127,10 @@ export default function App() {
       <main className="dashboard">
         <section className="hero-card">
           <div>
-            <p className="eyebrow">USB Relay Workspace</p>
-            <h1>Relay control through a dedicated API and frontend.</h1>
+            <p className="eyebrow">Relay Board Workspace</p>
+            <h1>Relay control</h1>
             <p className="hero-copy">
-              The UI only talks to the Express service. The service owns the hardware connection and
+              This User Interface talks to the Express service. The service owns the hardware connection and
               serializes commands before they reach the USB relay library.
             </p>
           </div>
@@ -143,9 +154,20 @@ export default function App() {
           <article className="panel panel--status">
             <div className="panel__header">
               <h2>Connection</h2>
-              <button type="button" className="ghost-button" onClick={refresh} disabled={busy}>
-                Refresh
-              </button>
+              <div className="header-controls">
+                <label className="toggle-row" htmlFor="auto-refresh">
+                  <input
+                    id="auto-refresh"
+                    type="checkbox"
+                    checked={autoRefresh}
+                    onChange={(event) => setAutoRefresh(event.target.checked)}
+                  />
+                  Auto refresh ({POLL_INTERVAL_MS / 1000}s)
+                </label>
+                <button type="button" className="ghost-button" onClick={refresh} disabled={busy}>
+                  Refresh
+                </button>
+              </div>
             </div>
             <dl className="detail-list">
               <div>

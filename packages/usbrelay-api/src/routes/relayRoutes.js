@@ -63,7 +63,7 @@ export function createRelayRouter(relayService) {
     }
   });
 
-  router.post("/relays/:relayNumber/on", async (req, res, next) => {
+  router.post("/relays/:relayNumber(\\d+)/on", async (req, res, next) => {
     try {
       const relayNumber = toRelayNumber(req.params.relayNumber);
       const snapshot = await relayService.setRelay(relayNumber, true);
@@ -73,7 +73,7 @@ export function createRelayRouter(relayService) {
     }
   });
 
-  router.post("/relays/:relayNumber/off", async (req, res, next) => {
+  router.post("/relays/:relayNumber(\\d+)/off", async (req, res, next) => {
     try {
       const relayNumber = toRelayNumber(req.params.relayNumber);
       const snapshot = await relayService.setRelay(relayNumber, false);
