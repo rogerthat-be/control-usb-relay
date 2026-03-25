@@ -1,19 +1,21 @@
 {
-  "name": "usb-relay-nodejs",
-  "version": "2.0.0",
-  "description": "Node.js HID driver for dcttech USB relay board (0x16c0:0x05df)",
-  "main": "src/app.js",
-  "exports": {
-    ".": "./src/usbrelay/index.js"
-  },
+  "name": "usb-relay-workspace",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Workspace with a reusable USB relay library, Express API, and Vite React frontend.",
   "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "start": "node src/app.js",
-    "test": "node scripts/test-relay.js",
-    "scan": "node -e \"import('./src/usbrelay/index.js').then(({findDevices}) => console.log(findDevices()));\""
+    "dev": "node scripts/dev.mjs",
+    "dev:api": "npm run dev --workspace @usb-relay/api",
+    "dev:web": "npm run dev --workspace @usb-relay/web",
+    "scan": "npm run scan --workspace @usb-relay/lib",
+    "test:hardware": "npm run test --workspace @usb-relay/lib",
+    "build": "npm run build --workspace @usb-relay/web"
   },
-  "dependencies": {
-    "node-hid": "^3.3.0",
-    "usb": "^2.17.0"
+  "engines": {
+    "node": ">=20"
   }
 }

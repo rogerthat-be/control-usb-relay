@@ -1,0 +1,334 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+:root {
+  font-family: "Space Grotesk", sans-serif;
+  color: #f4f1ea;
+  background:
+    radial-gradient(circle at top left, rgba(255, 110, 64, 0.24), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(0, 152, 116, 0.18), transparent 28%),
+    linear-gradient(135deg, #1a1f1d 0%, #121615 52%, #0d1110 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --surface: rgba(20, 27, 24, 0.78);
+  --surface-strong: rgba(31, 39, 35, 0.95);
+  --border: rgba(244, 241, 234, 0.12);
+  --accent: #ff7a3d;
+  --accent-strong: #ff5c1b;
+  --signal-on: #5ed39b;
+  --signal-off: #707b76;
+  --text-muted: rgba(244, 241, 234, 0.7);
+  --shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.page-shell {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.ambient {
+  position: absolute;
+  width: 30rem;
+  height: 30rem;
+  border-radius: 999px;
+  filter: blur(48px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.ambient--left {
+  top: -8rem;
+  left: -8rem;
+  background: rgba(255, 122, 61, 0.25);
+}
+
+.ambient--right {
+  bottom: -10rem;
+  right: -8rem;
+  background: rgba(38, 209, 148, 0.18);
+}
+
+.dashboard {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, calc(100vw - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+}
+
+.hero-card,
+.panel,
+.relay-section {
+  background: var(--surface);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.hero-card {
+  display: grid;
+  grid-template-columns: 1.35fr 0.85fr;
+  gap: 2rem;
+  padding: 2rem;
+  border-radius: 28px;
+  animation: fade-up 500ms ease-out;
+}
+
+.eyebrow,
+.subtle-copy,
+.relay-card__hint,
+.support-copy,
+.detail-list dt {
+  color: var(--text-muted);
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+}
+
+.hero-card h1,
+.panel__header h2 {
+  margin: 0;
+  line-height: 1.05;
+}
+
+.hero-card h1 {
+  font-size: clamp(2.4rem, 5vw, 4.6rem);
+  max-width: 12ch;
+}
+
+.hero-copy {
+  max-width: 62ch;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+.hero-stats {
+  display: grid;
+  gap: 1rem;
+}
+
+.stat-box {
+  padding: 1.1rem 1.25rem;
+  border-radius: 20px;
+  background: var(--surface-strong);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.stat-box span,
+.detail-list dt {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stat-box strong,
+.detail-list dd {
+  font-size: 1.4rem;
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.panel,
+.relay-section {
+  border-radius: 24px;
+  padding: 1.5rem;
+  animation: fade-up 650ms ease-out;
+}
+
+.panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detail-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0 0 1.5rem;
+}
+
+.detail-list div {
+  padding: 1rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.detail-list dd {
+  margin: 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1rem;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.solid-button,
+.ghost-button {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.solid-button {
+  color: #111;
+  background: linear-gradient(135deg, #ffd157, var(--accent));
+}
+
+.ghost-button {
+  color: inherit;
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.solid-button:hover,
+.ghost-button:hover,
+.relay-card:hover {
+  transform: translateY(-2px);
+}
+
+.solid-button:disabled,
+.ghost-button:disabled,
+.relay-card:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.relay-section {
+  margin-top: 1.5rem;
+  animation-delay: 120ms;
+}
+
+.relay-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.relay-card {
+  display: grid;
+  gap: 0.6rem;
+  text-align: left;
+  padding: 1.2rem;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+}
+
+.relay-card__label {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.relay-card__state {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.relay-card.is-on {
+  background: linear-gradient(180deg, rgba(94, 211, 155, 0.16), rgba(255, 255, 255, 0.04));
+  border-color: rgba(94, 211, 155, 0.36);
+}
+
+.relay-card.is-on .relay-card__state {
+  color: var(--signal-on);
+}
+
+.relay-card.is-off .relay-card__state {
+  color: var(--signal-off);
+}
+
+.error-banner {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 16px;
+  background: rgba(255, 90, 90, 0.1);
+  border: 1px solid rgba(255, 90, 90, 0.22);
+  color: #ffb5b5;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .hero-card,
+  .panel-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard {
+    width: min(100vw - 1rem, 1180px);
+    padding-top: 1rem;
+  }
+
+  .hero-card,
+  .panel,
+  .relay-section {
+    padding: 1.1rem;
+    border-radius: 20px;
+  }
+
+  .hero-card h1 {
+    font-size: 2.3rem;
+  }
+
+  .button-row {
+    flex-direction: column;
+  }
+}

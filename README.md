@@ -1,164 +1,85 @@
-# USBRelay8 Node.js Wrapper
+# USB Relay Workspace
 
-A lightweight and easy-to-use **Node.js wrapper** for controlling the **USBRelay8 (USBB-RELAY08)** relay board via USB.
+This workspace separates the USB relay solution into three independently usable parts:
 
-This project provides both a programmatic API and a CLI tool, making it ideal for automation, IoT setups, and hardware control from Node.js.
+- `@usb-relay/lib`: reusable Node.js library for USB relay hardware access
+- `@usb-relay/api`: Express API that exposes the relay over HTTP
+- `@usb-relay/web`: Vite + React frontend that talks to the API
 
-![USB Relay Board](./_assets/board.webp)
+The structure keeps hardware access, backend orchestration, and frontend UI isolated so each layer can evolve or be deployed independently.
 
----
+## Workspace Layout
 
-## Features
-
-- Control individual relays (on/off)
-- Switch all relays at once
-- Read relay state
-- Interactive CLI tool
-- Device scanning utility
-- Promise-based API
-- Clean OOP architecture
-
----
-
-## Hardware Support
-
-This project is **developed and tested specifically with USBRelay8 hardware**.
-
-- Vendor: https://www.seeit.fr/
-- Purchase link: https://benl.rs-online.com/web/p/communication-wireless-development-tools/2864068
-- VID/PID: `16c0:05df`
-
-📄 Datasheet available in this repository:
-
-<Datasheet/A700000011182296.pdf>
-
-> ⚠️ Other relay boards may work, but only USBRelay8 has been validated.
-
----
-
-## Repository Structure
-
-```
-_deprecated/              # Legacy / unused code
-src/
-  app.js                 # CLI application
-  usbrelay/
-    UsbRelay.js          # Core relay class
-    index.js             # Public module entry
+```text
+packages/
+  usbrelay-lib/   Reusable USB/HID relay library
+  usbrelay-api/   Express HTTP API around the library
+  usbrelay-web/   Vite + React client
 scripts/
-  test-relay.js          # Hardware diagnostics
-package.json
+  dev.mjs         Starts API and web app together
 ```
 
----
+## Requirements
 
-## Installation
+- Node.js 20+
+- Supported USB relay board using VID/PID `16c0:05df`
+- On Windows: Zadig driver setup for the USB relay device
+
+## Install
 
 ```bash
 npm install
 ```
 
----
+## Development
 
-## Platform Setup
+Start API and frontend together:
 
-### macOS
+```bash
+npm run dev
+```
 
-No additional setup required.
+Run only the API:
 
-- Uses `node-hid` backend automatically
-- Works out of the box
+```bash
+npm run dev:api
+```
 
----
+Run only the frontend:
 
-### Windows
+```bash
+npm run dev:web
+```
 
-Requires driver installation using **Zadig**.
-
-Download: https://zadig.akeo.ie/
-
-#### Tested configuration:
-- ✅ `libusb-win32`
-
-#### Likely compatible (not tested):
-- ⚠️ `libusbK`
-
-#### Installation Steps:
-
-1. Connect the USB relay board
-2. Open Zadig as Administrator
-3. Enable: `Options → List All Devices`
-4. Select device: **USBRelay8** (VID `16c0`, PID `05df`)
-5. Choose driver: `libusb-win32`
-6. Click **Install Driver** or **Replace Driver**
-7. Reconnect the device
-8. Run:
+Scan for connected devices through the library package:
 
 ```bash
 npm run scan
 ```
 
----
-
-## Available Commands
-
-| Command          | Description                          |
-|------------------|--------------------------------------|
-| `npm start`      | Run interactive CLI                  |
-| `npm test`       | Run hardware diagnostics             |
-| `npm run scan`   | List connected relay devices         |
-
----
-
-## Usage
-
-### Basic Example
-
-```js
-import { UsbRelay } from './src/usbrelay/index.js';
-
-async function main() {
-  const relay = new UsbRelay(8);
-
-  await relay.open();
-
-  await relay.relayOn(1);
-  await relay.relayOff(1);
-  await relay.allOff();
-
-  console.log(relay.getState());
-
-  await relay.close();
-}
-
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
-```
-
----
-
-## Troubleshooting
-
-If the device is not detected:
-
-1. Verify the device is connected
-2. Confirm VID/PID: `16c0:05df`
-3. Run:
+Run the hardware diagnostics script:
 
 ```bash
-npm run scan
+npm run test:hardware
 ```
 
-4. On Windows:
-   - Ensure Zadig driver is installed correctly
-   - Recommended: `libusb-win32`
+## Default Ports
 
----
+- API: `http://localhost:3000`
+- Frontend: `http://localhost:5173`
+
+The Vite dev server proxies `/api/*` requests to the Express API.
+
+## Environment
+
+The API package supports these environment variables:
+
+- `PORT`: API port, default `3000`
+- `RELAY_COUNT`: relay count, default `8`
+- `API_CORS_ORIGIN`: allowed frontend origin, default `http://localhost:5173`
 
 ## Notes
 
-- Built on top of `node-hid`
-- Designed for reliability and simplicity
-- Suitable for automation, prototyping, and hardware integrations
+- The hardware protocol remains in the library package only.
+- The API serializes relay commands through a single service instance.
+- The frontend never touches native USB dependencies directly.

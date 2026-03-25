@@ -1,0 +1,17 @@
+{
+  "name": "@usb-relay/api",
+  "version": "1.0.0",
+  "description": "Express API for controlling the USB relay library.",
+  "type": "module",
+  "main": "./src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "build": "node -e \"console.log('No build step required for @usb-relay/api');\""
+  },
+  "dependencies": {
+    "@usb-relay/lib": "1.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}

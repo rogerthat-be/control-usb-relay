@@ -1,0 +1,19 @@
+{
+  "name": "@usb-relay/lib",
+  "version": "1.0.0",
+  "description": "Reusable Node.js library for USB relay boards using usb and node-hid.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "scan": "node scripts/scan.js",
+    "test": "node scripts/test-relay.js",
+    "build": "node -e \"console.log('No build step required for @usb-relay/lib');\""
+  },
+  "dependencies": {
+    "node-hid": "^3.3.0",
+    "usb": "^2.17.0"
+  }
+}
