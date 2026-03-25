@@ -1,4 +1,4 @@
-# Wrapper for USBRelay8 with Node.js
+# USBRelay8 Node.js Wrapper
 
 A lightweight and easy-to-use **Node.js wrapper** for controlling the **USBRelay8 (USBB-RELAY08)** relay board via USB.
 
