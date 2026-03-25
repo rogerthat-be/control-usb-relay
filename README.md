@@ -1,5 +1,7 @@
 # USB Relay Workspace
 
+![USB Relay Board](./_assets/board.webp)
+
 This workspace separates the USB relay solution into three independently usable parts:
 
 - `@usb-relay/lib`: reusable Node.js library for USB relay hardware access
@@ -7,6 +9,8 @@ This workspace separates the USB relay solution into three independently usable 
 - `@usb-relay/web`: Vite + React frontend that talks to the API
 
 The structure keeps hardware access, backend orchestration, and frontend UI isolated so each layer can evolve or be deployed independently.
+
+![Dashboard screenshot](./_assets/screenshot.png)
 
 ---
 
