@@ -1,4 +1,4 @@
-# USB Relay - Node.js drivers (macOS / Windows)
+# USB Relay - Node.js wrapper for Seeit USBB-RELAY08
 
 Node.js implementations for the Seeit USBB-RELAY08 Relay Control Card Module (a dcttech USB relay board)
 
